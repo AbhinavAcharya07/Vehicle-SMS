@@ -15,7 +15,14 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173' }));
+app.use(cors({ 
+  origin: [
+    'http://localhost:5173', 
+    'https://timely-cuchufli-4cccd9.netlify.app/' 
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+}));
 app.use(express.json());
 
 app.use('/api/vehicles', vehicleRoutes);
