@@ -18,7 +18,7 @@ const app = express();
 app.use(cors({ 
   origin: [
     'http://localhost:5173', 
-    'https://timely-cuchufli-4cccd9.netlify.app/' 
+    'https://vehicle-sms-a3ll.vercel.app/' 
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
