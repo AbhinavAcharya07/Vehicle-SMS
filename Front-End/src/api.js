@@ -1,6 +1,12 @@
-
-
-const API_BASE_URL = 'http://localhost:5000/api';
+// Fixed: was hardcoded to http://localhost:5000/api, which is why the
+// production (Vercel) build kept calling localhost no matter what
+// VITE_API_BASE_URL was set to in Vercel's project settings — this
+// constant never read the env var at all.
+//
+// Falls back to localhost only when the env var is genuinely unset
+// (e.g. local dev without a .env file), so local development still
+// works without needing to set anything.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
 async function request(path, body) {
   let res;
@@ -22,7 +28,6 @@ async function request(path, body) {
   }
 
   if (!res.ok) {
-    
     throw new Error(data.message || 'Something went wrong. Please try again.');
   }
 
@@ -52,7 +57,6 @@ export function verifyOtp(payload) {
 export function resetPassword(payload) {
   return request('/auth/reset-password', payload);
 }
-
 
 export function saveSession(token, user) {
   localStorage.setItem('autotrack_token', token);
