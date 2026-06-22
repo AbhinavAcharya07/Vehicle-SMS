@@ -39,11 +39,15 @@ app.get('/api/health', (req, res) => {
 
 connectDB();
 
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
+const PORT = process.env.PORT || 5000;
+
+// This will now run perfectly both locally and on Render
+app.listen(PORT, '0.0.0.0', () => {
+  if (process.env.NODE_ENV !== 'production') {
     console.log(`AutoTrack backend running on http://localhost:${PORT}`);
-  });
-}
+  } else {
+    console.log(`AutoTrack backend live in production on port ${PORT}`);
+  }
+});
 
 export default app;
