@@ -30,10 +30,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Connect to DB at module load time — Vercel reads this synchronously
 connectDB();
 
-// Only bind a port when running locally (Vercel never reaches this)
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
@@ -41,5 +39,4 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// Vercel needs this — it wraps `app` as the Serverless Function handler
 export default app;
